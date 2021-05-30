@@ -4,8 +4,10 @@
 '''
 
 # from fetch_data import FetchData as FetchData
-import codebase.clean_data as FetchData
+from codebase.clean_data import FetchData as FetchData
 from matplotlib import pyplot as plt
+import io
+import base64
 
 class SubjectWisePlacementAnalysis:
   def __init__(self, activation = False):
@@ -14,7 +16,7 @@ class SubjectWisePlacementAnalysis:
   def generateGraph(self):
     # activation of the fetchData object which will inherit the properties 
     # FetchData class method
-    fetchData = FetchData.FetchData(True)
+    fetchData = FetchData(True)
     
     subject_list = fetchData.get_high_school_subjects()
     print(subject_list)
@@ -63,7 +65,15 @@ class SubjectWisePlacementAnalysis:
     plt.legend(["Science", "Commerce", "Arts"])
     plt.xlabel("No. of Students")
     plt.ylabel("Subject")
-    plt.show()
+
+    bytes = io.BytesIO()
+
+    plt.savefig(bytes, format="jpg")
+    bytes.seek(0)
+
+    b64 = base64.b64encode(bytes.read()).decode("ascii")
+
+    return b64
     
     # plt.plot()
   

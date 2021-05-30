@@ -6,13 +6,15 @@
 # from codebase import FetchData as FetchData
 from codebase.clean_data import FetchData as FetchData
 from matplotlib import pyplot as plt
+import io
+import base64
 
 class GenderWisePlacementAnalysis:
   def __init__(self, activation = False):
     self.activation = activation
     
   def generateGraph(self):
-    fetchDataObject = FetchData.FetchData(True)
+    fetchDataObject = FetchData(True)
     #  print(fetchDataObject.get_gender_list())
     #  print(fetchDataObject.get_student_placement_status_list())
     
@@ -41,8 +43,17 @@ class GenderWisePlacementAnalysis:
     plt.scatter(female_placement, len(placement_status_list))
     # plt.plot(male_placement)
     # plt.plot(female_placement)
-    
-    plt.show()
+
+    bytes = io.BytesIO()
+
+    plt.savefig(bytes, format="jpg")
+    bytes.seek(0)
+
+    b64 = base64.b64encode(bytes.read()).decode("ascii")
+
+    return b64
+
+
     
   
 # if __name__ == "__main__":

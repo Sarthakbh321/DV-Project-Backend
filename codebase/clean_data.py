@@ -17,7 +17,7 @@ class FetchData:
     def fetch_data_from_file(self):
         column_list = ["sl_no", "gender", "ssc_p", "ssc_b", "hsc_p", "hsc_b", "hsc_s", "degree_p", "degree_t", "workexp", "etest_p", "specialisation", "mba_p", "status", "salary"]
         # opening the csv file to fetch data
-        datafile = pandas.read_csv("codebase\datasets\dataset.csv",
+        datafile = pandas.read_csv("codebase/datasets/dataset.csv",
                                    usecols=column_list)
         # print(datafile["sl_no"])
         self.serial_number = datafile["sl_no"]
