@@ -4,7 +4,7 @@
 '''
 
 # from codebase import FetchData as FetchData
-from clean_data import FetchData as FetchData
+from codebase.clean_data import FetchData as FetchData
 from matplotlib import pyplot as plt
 
 class GenderWisePlacementAnalysis:

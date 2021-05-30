@@ -4,7 +4,7 @@
 '''
 
 # from fetch_data import FetchData as FetchData
-import clean_data as FetchData
+import codebase.clean_data as FetchData
 from matplotlib import pyplot as plt
 
 class SubjectWisePlacementAnalysis:
