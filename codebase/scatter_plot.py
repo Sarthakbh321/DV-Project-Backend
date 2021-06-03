@@ -12,6 +12,9 @@ def generateScatterPlot(params):
     if(params["filter"]["gender"] != "both"):
         df = df[(df["gender"] == params["filter"]["gender"])]
 
+    if (params["filter"]["subjects"] != "all"):
+        df = df[(df["degree_t"] == params["filter"]["subjects"])]
+
     x = df[params["x_axis"]]
     y = df[params["y_axis"]]
 

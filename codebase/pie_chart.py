@@ -16,6 +16,9 @@ def generatePieChart(params):
     if(params["filter"]["gender"] != "both"):
         df = df[(df["gender"] == params["filter"]["gender"])]
 
+    if (params["filter"]["subjects"] != "all"):
+        df = df[(df["degree_t"] == params["filter"]["subjects"])]
+
     labels = df[params["x_axis"]]
 
     labelArr = []
