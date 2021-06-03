@@ -3,11 +3,7 @@ import pandas
 import base64
 import io
 
-def percentage(pct, data):
-    absolute = int(pct / 100. * sum(data))
-    return "{:.1f}%\n({:d})".format(pct, absolute)
-
-def generatePieChart(params):
+def generateScatterPlot(params):
     column_list = ["sl_no", "gender", "ssc_p", "ssc_b", "hsc_p", "hsc_b", "hsc_s", "degree_p", "degree_t", "workexp",
                    "etest_p", "specialisation", "mba_p", "status", "salary"]
 
@@ -16,22 +12,16 @@ def generatePieChart(params):
     if(params["filter"]["gender"] != "both"):
         df = df[(df["gender"] == params["filter"]["gender"])]
 
-    labels = df[params["x_axis"]]
-
-    labelArr = []
-    countArr = []
-
-    for (label, count) in labels.value_counts().iteritems():
-        labelArr.append(label)
-        countArr.append(count)
+    x = df[params["x_axis"]]
+    y = df[params["y_axis"]]
 
     plt.clf()
 
+    plt.xlabel(params["x_axis"])
+    plt.ylabel(params["y_axis"])
     plt.title("Generated Chart")
-    patches = plt.pie(countArr, labels=labelArr, autopct=lambda pct: percentage(pct, countArr))
 
-    if (params["filter"]["legend"]):
-        plt.legend(patches, labelArr)
+    plt.scatter(x, y)
 
     bytes = io.BytesIO()
 

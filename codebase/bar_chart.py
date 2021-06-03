@@ -19,8 +19,6 @@ def generateBarChart(params):
     plt.xlabel(params["x_axis"])
     plt.ylabel(params["y_axis"])
 
-    if(params["filter"]["legend"]):
-        plt.legend()
 
     # xticks = [i for i in range(1, len(x) + 1)]
     # yticks = [i for i in range(1, len(y) + 1)]

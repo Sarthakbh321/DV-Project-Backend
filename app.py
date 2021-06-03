@@ -5,6 +5,7 @@ import PIL
 from codebase.subject_wise import SubjectWisePlacementAnalysis
 from codebase.bar_chart import generateBarChart
 from codebase.pie_chart import generatePieChart
+from codebase.scatter_plot import generateScatterPlot
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -42,6 +43,8 @@ def generate():
             b64 = generateBarChart(params)
         elif(params["chart"] == "pie"):
             b64 = generatePieChart(params)
+        elif(params["chart"] == "scatter"):
+            b64 = generateScatterPlot(params)
 
         res = {
             "image": b64
