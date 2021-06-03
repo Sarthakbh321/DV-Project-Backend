@@ -6,6 +6,7 @@ colorama==0.4.4
 cycler==0.10.0
 docutils==0.17.1
 Flask==2.0.1
+Flask-Cors==3.0.10
 gunicorn==19.9.0
 idna==2.10
 importlib-metadata==4.2.0
