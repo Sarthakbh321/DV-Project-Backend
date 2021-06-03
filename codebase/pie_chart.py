@@ -28,7 +28,7 @@ def generatePieChart(params):
     plt.clf()
 
     plt.title("Generated Chart")
-    patches = plt.pie(countArr, labels=labelArr, autopct=lambda pct: percentage(pct, countArr))
+    patches, texts, junk = plt.pie(countArr, labels=labelArr, autopct=lambda pct: percentage(pct, countArr))
 
     if (params["filter"]["legend"]):
         plt.legend(patches, labelArr)

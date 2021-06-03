@@ -1,12 +1,12 @@
 import base64
 from flask import Flask, jsonify, request
 from codebase.gender_wise import GenderWisePlacementAnalysis
-import PIL
+import pandas
 from codebase.subject_wise import SubjectWisePlacementAnalysis
 from codebase.bar_chart import generateBarChart
 from codebase.pie_chart import generatePieChart
 from codebase.scatter_plot import generateScatterPlot
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -29,6 +29,27 @@ def get_graph():
     res = {
         "image": result,
         "image2": result1
+    }
+
+    return jsonify(res)
+
+
+@app.route("/stats")
+def getStats():
+    column_list = ["sl_no", "gender", "ssc_p", "ssc_b", "hsc_p", "hsc_b", "hsc_s", "degree_p", "degree_t", "workexp",
+                   "etest_p", "specialisation", "mba_p", "status", "salary"]
+
+    df = pandas.read_csv("codebase/datasets/dataset.csv", usecols=column_list)
+
+    placed = df[(df["status"] == "Placed")]
+    boysPlaced = placed[(placed["gender"] == "M")]
+    girlsPlaced = placed[(placed["gender"] == "F")]
+
+    res = {
+        "total": len(df),
+        "placed": len(placed),
+        "boysPlaced": len(boysPlaced),
+        "girlsPlaced": len(girlsPlaced),
     }
 
     return jsonify(res)
