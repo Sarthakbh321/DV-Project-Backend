@@ -6,6 +6,7 @@ from codebase.subject_wise import SubjectWisePlacementAnalysis
 from codebase.bar_chart import generateBarChart
 from codebase.pie_chart import generatePieChart
 from codebase.scatter_plot import generateScatterPlot
+from codebase.histograms import generateHistogram
 from flask_cors import CORS
 
 app = Flask(__name__)
@@ -66,6 +67,8 @@ def generate():
             b64 = generatePieChart(params)
         elif(params["chart"] == "scatter"):
             b64 = generateScatterPlot(params)
+        elif(params["chart"] == "hist"):
+            b64 = generateHistogram(params)
 
         res = {
             "image": b64
