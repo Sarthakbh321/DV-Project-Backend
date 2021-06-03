@@ -4,6 +4,7 @@ from codebase.gender_wise import GenderWisePlacementAnalysis
 import PIL
 from codebase.subject_wise import SubjectWisePlacementAnalysis
 from codebase.bar_chart import generateBarChart
+from codebase.pie_chart import generatePieChart
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)
@@ -37,7 +38,10 @@ def generate():
     if(request.method == "POST"):
         params = request.json['params']
 
-        b64 = generateBarChart(params)
+        if(params["chart"] == "bar"):
+            b64 = generateBarChart(params)
+        elif(params["chart"] == "pie"):
+            b64 = generatePieChart(params)
 
         res = {
             "image": b64

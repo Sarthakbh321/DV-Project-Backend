@@ -3,7 +3,11 @@ import pandas
 import base64
 import io
 
-def generateBarChart(params):
+def percentage(pct, data):
+    absolute = int(pct / 100. * sum(data))
+    return "{:.1f}%\n({:d})".format(pct, absolute)
+
+def generatePieChart(params):
     column_list = ["sl_no", "gender", "ssc_p", "ssc_b", "hsc_p", "hsc_b", "hsc_s", "degree_p", "degree_t", "workexp",
                    "etest_p", "specialisation", "mba_p", "status", "salary"]
 
@@ -12,26 +16,24 @@ def generateBarChart(params):
     if(params["filter"]["gender"] != "both"):
         df = df[(df["gender"] == params["filter"]["gender"])]
 
-    x = df[params["x_axis"]]
-    y = df[params["y_axis"]]
+    labels = df[params["x_axis"]]
+
+    labelArr = []
+    countArr = []
+
+    for (label, count) in labels.value_counts().iteritems():
+        labelArr.append(label)
+        countArr.append(count)
 
     plt.clf()
-    plt.xlabel(params["x_axis"])
-    plt.ylabel(params["y_axis"])
 
-    if(params["filter"]["legend"]):
-        plt.legend()
-
-    # xticks = [i for i in range(1, len(x) + 1)]
-    # yticks = [i for i in range(1, len(y) + 1)]
-    #
-    # plt.xticks(xticks, x, rotation='vertical')
-    # plt.yticks(yticks, y)
 
 
     plt.title("Generated Chart")
+    patches = plt.pie(countArr, labels=labelArr, autopct=lambda pct: percentage(pct, countArr))
 
-    plt.bar(x, y)
+    if (params["filter"]["legend"]):
+        plt.legend(patches, labelArr)
 
     bytes = io.BytesIO()
 
@@ -41,13 +43,3 @@ def generateBarChart(params):
     b64 = base64.b64encode(bytes.read()).decode("ascii")
 
     return b64
-
-
-if __name__ == '__main__':
-    params = {"x_axis": "sl_no", "y_axis": "salary"}
-    generateBarChart(params)
-
-
-
-
-
